@@ -2,11 +2,6 @@
 
 An AI-powered platform that automates the analysis of lumbar spine MRI scans. It **detects** vertebrae and discs, **segments** spinal structures, and **grades** the severity of degeneration, then shows the results in a Flask web app.
 
-> **Guide:** Dr. Manas Ranjan Prusty
-> **Team:** K. Sai Sukanya (21BPS1162), Tanishka Banerjee (21BPS1551)
-> **Institution:** Vellore Institute of Technology (VIT), Chennai
-
----
 
 ## Table of Contents
 - [Overview](#overview)
@@ -211,6 +206,4 @@ The next step is publication: a research paper covering the models, methodology 
 6. Mousavi, A. (2024). Lumbar Spine Degenerative Classification Using YOLO v8 and DeepScoreNet.
 7. Sandler, M., et al. (2018). MobileNetV2: Inverted Residuals and Linear Bottlenecks. *CVPR 2018*.
 8. Lim, D.S.W., et al. (2022). Improved Productivity Using Deep Learning-assisted Reporting for Lumbar Spine MRI. *Radiology*, 305(1), 160-166.
-
----
 
