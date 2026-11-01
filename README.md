@@ -48,13 +48,19 @@ The goal is an automated system that detects, segments and classifies lumbar abn
 ## System Design
 
 ### Deployment overview
-![Deployment diagram](images/deployment-diagram.jpeg)
+![Deployment diagram]
+<img width="1260" height="1280" alt="deployment-diagram" src="https://github.com/user-attachments/assets/29b1a305-e0a8-4efa-9e4f-9ca89a43606b" />
+
 
 ### Project flow
-![Project flowchart](images/project-flowchart.jpg)
+![Project flowchart]
+<img width="1132" height="1600" alt="project-flowchart" src="https://github.com/user-attachments/assets/91a87ea7-d405-40db-b197-8cca0e5b2248" />
+
 
 ### System architecture
-![System architecture](images/system-architecture.png)
+![System architecture]
+<img width="1203" height="318" alt="system-architecture" src="https://github.com/user-attachments/assets/981d5e0a-9415-47f9-836f-01b29cb0ce61" />
+
 
 **Pipeline:** User input (MRI upload) -> Data preprocessing (resize to 256x256, normalisation, augmentation) -> Detection and segmentation -> Classification -> Prediction output (labels, boxes, masks) -> Visual output in the web interface.
 
@@ -73,8 +79,10 @@ The goal is an automated system that detects, segments and classifies lumbar abn
 Predicted boxes for each lumbar level, with labels and confidence scores.
 
 <p align="center">
-  <img src="images/faster-rcnn-prediction-1.png" width="45%" alt="Faster R-CNN prediction 1">
-  <img src="images/faster-rcnn-prediction-2.png" width="45%" alt="Faster R-CNN prediction 2">
+  <img src="<img width="662" height="653" alt="faster-rcnn-prediction-1" src="https://github.com/user-attachments/assets/d064706a-ee69-479a-b7c2-ec62f6f0458c" />
+" width="45%" alt="Faster R-CNN prediction 1">
+  <img src="<img width="666" height="653" alt="faster-rcnn-prediction-2" src="https://github.com/user-attachments/assets/9eec9421-1193-4672-8c23-6990c11d5a12" />
+" width="45%" alt="Faster R-CNN prediction 2">
 </p>
 
 ### U-Net+
@@ -87,28 +95,39 @@ Metrics at epoch 20:
 | Dice coefficient | 0.8208 | 0.7304 |
 | Pixel accuracy | 99.77% | 99.67% |
 
-![U-Net+ training curves](images/unet-training-curves.png)
+![U-Net+ training curves]
+<img width="1489" height="1189" alt="unet-training-curves" src="https://github.com/user-attachments/assets/8d937ab3-d8ec-41e8-be8a-b4d1bbadb698" />
+
 
 ### YOLOv8
 The F1-confidence curve reaches **0.94** across all classes at a confidence of 0.349.
 
-![YOLOv8 validation log](images/yolov8-validation-log.png)
+![YOLOv8 validation log]
+<img width="1113" height="229" alt="yolov8-validation-log" src="https://github.com/user-attachments/assets/6f83b7a2-8639-45d8-9524-d3dc923341af" />
+
 
 <p align="center">
-  <img src="images/yolov8-confusion-matrix.png" width="48%" alt="YOLOv8 confusion matrix">
-  <img src="images/yolov8-f1-curve.png" width="48%" alt="YOLOv8 F1-confidence curve">
+  <img src="<img width="1378" height="649" alt="yolov8-confusion-matrix" src="https://github.com/user-attachments/assets/c2ff601b-bb13-4ab0-9fa7-7578ddd72a73" />
+" width="48%" alt="YOLOv8 confusion matrix">
+  <img src="<img width="1379" height="919" alt="yolov8-f1-curve" src="https://github.com/user-attachments/assets/69449b2e-a196-4280-9457-79296667b384" />
+" width="48%" alt="YOLOv8 F1-confidence curve">
 </p>
 
 ### DenseNet
 Accuracy of **73.24%** at epoch 100, with training converging after roughly 50 epochs. "Normal/Mild" is classified best, and most errors are Severe cases predicted as Moderate or Normal/Mild.
 
-![DenseNet training curves](images/densenet-training-curves.png)
+![DenseNet training curves]
+<img width="1490" height="490" alt="densenet-training-curves" src="https://github.com/user-attachments/assets/641f59b1-e7f4-4e75-840d-21154e94d90b" />
+
 
 ## Web Application
 
 | Home | Upload | Result |
 |---|---|---|
-| ![Home](images/web-home.png) | ![Upload](images/web-upload.png) | ![Result](images/web-result.png) |
+| ![Home](<img width="1379" height="691" alt="web-home" src="https://github.com/user-attachments/assets/5ae6f3e0-92de-46ed-a503-ad43dd531624" />
+) | ![Upload](<img width="1241" height="814" alt="web-upload" src="https://github.com/user-attachments/assets/9749e987-2933-40ce-a402-8188ad150615" />
+) | ![Result](<img width="1379" height="1509" alt="web-result" src="https://github.com/user-attachments/assets/78bf1fe8-b9e5-4b81-8fee-63d30c5637c0" />
+) |
 
 ## Tech Stack
 
@@ -140,32 +159,6 @@ The trained weights (`.pth`) are too large for GitHub and are hosted on Hugging 
 
 **https://huggingface.co/saisuukaanyaa/spineai-models**
 
-Download the files into `CODE/BACKEND/result-yolo-unet/models/`.
-
-## Setup and Run
-
-> Adjust the file names below to match your code.
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/saisuukaanyaa-dev/YOUR-REPO-NAME.git
-cd YOUR-REPO-NAME
-
-# 2. Create a virtual environment
-python -m venv venv
-venv\Scripts\activate          # Windows
-
-# 3. Install dependencies
-pip install torch torchvision ultralytics flask pandas numpy scikit-learn matplotlib seaborn
-
-# 4. Download the model weights from Hugging Face (see above)
-
-# 5. Start the app
-cd CODE/BACKEND
-python app.py
-```
-
-Then open `http://127.0.0.1:5000` in your browser.
 
 ## Challenges and Solutions
 
