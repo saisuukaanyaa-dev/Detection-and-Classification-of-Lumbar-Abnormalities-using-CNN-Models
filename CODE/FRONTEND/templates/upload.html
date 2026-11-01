@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LumbarGuard AI Detection</title>
+  <link rel="shortcut icon" href="/static/images/spine_icon.png" type="image/png">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts, Font Awesome for icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); /* Light blue medical tones */
+      color: #1E3A8A;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background: rgba(30, 58, 138, 0.95); /* Deep blue for trust */
+      box-shadow: 0 4px 15px rgba(187, 222, 251, 0.1);
+      padding: 20px 0;
+    }
+    .navbar-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #10B981; /* Emerald green for health theme */
+    }
+    .navbar-nav .nav-link {
+      color: #E3F2FD;
+      font-weight: 500;
+      margin: 0 16px;
+      border-radius: 8px;
+      transition: all 0.4s ease-in-out;
+    }
+    .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+      background: #10B981;
+      color: #1E3A8A;
+      transform: translateY(-2px);
+    }
+
+    /* Upload Section */
+    .upload-section {
+      padding: 100px 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #BBDEFB;
+      position: relative;
+      overflow: hidden;
+    }
+    .upload-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('/static/images/spine_xray_abstract.webp') center/cover no-repeat;
+      mix-blend-mode: overlay;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    .upload-container {
+      background: rgba(227, 242, 253, 0.9);
+      padding: 60px;
+      border-radius: 20px;
+      box-shadow: 0 6px 25px rgba(187, 222, 251, 0.3);
+      max-width: 750px;
+      width: 100%;
+      transition: transform 0.6s ease, box-shadow 0.6s;
+      z-index: 1;
+      backdrop-filter: blur(10px);
+    }
+    .upload-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 35px rgba(187, 222, 251, 0.4);
+    }
+    .upload-title {
+      font-size: 2.7rem;
+      font-weight: 700;
+      color: #10B981;
+      text-align: center;
+      margin-bottom: 45px;
+      position: relative;
+      text-shadow: 0 3px 10px rgba(30, 58, 138, 0.4);
+      animation: fadeInUp 1.5s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .upload-title i {
+      margin-right: 20px;
+      font-size: 2.5rem;
+      color: #10B981;
+      transition: transform 0.5s ease;
+    }
+    .upload-title:hover i {
+      transform: scale(1.1);
+    }
+    .upload-title::after {
+      content: '';
+      width: 80px;
+      height: 5px;
+      background: linear-gradient(90deg, #10B981, #3B82F6);
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 3px;
+    }
+    .form-group {
+      margin-bottom: 35px;
+      position: relative;
+    }
+    .form-group label {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #1E40AF;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .form-group .form-control {
+      padding: 14px 14px 14px 50px;
+      border-radius: 12px;
+      border: 1px solid #10B981;
+      background: rgba(187, 222, 251, 0.6);
+      color: #1E3A8A;
+      font-size: 1.1rem;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .form-group .form-control:focus {
+      border-color: #059669;
+      box-shadow: 0 0 10px rgba(5, 150, 105, 0.5);
+      background: rgba(187, 222, 251, 0.8);
+      outline: none;
+    }
+    .form-group i {
+      position: absolute;
+      left: 15px;
+      top: 48px;
+      color: #10B981;
+      font-size: 1.4rem;
+      transition: color 0.4s ease;
+    }
+    .form-group .form-control:focus + i {
+      color: #059669;
+    }
+    .btn-primary {
+      width: 100%;
+      background: #10B981;
+      border: none;
+      padding: 18px;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #E3F2FD;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      box-shadow: 0 8px 25px rgba(187, 222, 251, 0.2);
+      transition: background 0.4s, box-shadow 0.4s, transform 0.4s;
+      display: none;
+    }
+    .btn-primary:hover {
+      background: #059669;
+      color: #E3F2FD;
+      box-shadow: 0 10px 30px rgba(187, 222, 251, 0.3);
+      transform: translateY(-3px);
+    }
+    .btn-primary i {
+      margin-left: 12px;
+      transition: transform 0.4s ease;
+    }
+    .btn-primary:hover i {
+      transform: translateX(5px);
+    }
+
+    /* Results Section */
+    .result-container {
+      margin-top: 40px;
+      padding: 30px;
+      background: rgba(187, 222, 251, 0.7);
+      border-radius: 15px;
+      border-left: 5px solid #10B981;
+    }
+    .result-img {
+      display: block;
+      margin: 20px auto;
+      border: 2px solid #10B981;
+      border-radius: 12px;
+      padding: 8px;
+      max-width: 100%;
+      height: auto;
+      box-shadow: 0 6px 20px rgba(187, 222, 251, 0.3);
+      transition: transform 0.4s ease;
+    }
+    .result-img:hover {
+      transform: scale(1.02);
+    }
+    .result-text {
+      font-size: 1.4rem;
+      color: #1E40AF;
+      text-align: center;
+      margin-top: 25px;
+      font-weight: 500;
+      animation: fadeIn 1.5s ease-out;
+    }
+    .severity-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin: 5px;
+      font-size: 0.9rem;
+    }
+    .severity-normal {
+      background: #2ecc71;
+      color: white;
+    }
+    .severity-moderate {
+      background: #f39c12;
+      color: white;
+    }
+    .severity-severe {
+      background: #e74c3c;
+      color: white;
+    }
+    .analysis-details {
+      background: rgba(227, 242, 253, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .analysis-details h5 {
+      color: #10B981;
+      margin-bottom: 15px;
+    }
+    .condition-item {
+      padding: 10px;
+      border-bottom: 1px solid rgba(5, 150, 105, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .condition-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Footer */
+    .footer {
+      background: #BBDEFB;
+      text-align: center;
+      padding: 45px 0;
+      color: #10B981;
+      font-size: 1.1rem;
+    }
+
+    /* Loading Animation */
+    .loading-spinner {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .spinner-border {
+      color: #10B981;
+      width: 3rem;
+      height: 3rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      .upload-container { padding: 40px; }
+      .upload-title { font-size: 2.2rem; }
+      .result-text { font-size: 1.2rem; }
+      .form-group i { top: 44px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="fas fa-user-md"></i> LumbarGuard AI Detection</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="fas fa-bars text-white"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('home') }}">
+              <i class="fas fa-home"></i> Home
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('upload') }}">
+              <i class="fas fa-upload"></i> Upload Image
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Upload Section -->
+  <section class="upload-section">
+    <div class="upload-container">
+      <form id="prediction-form" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <h1 class="upload-title">
+          <i class="fas fa-brain"></i> Lumbar Abnormality Analysis
+        </h1>
+        <div class="form-group">
+          <label for="image_file">
+            <i class="fas fa-file-medical"></i> Upload Lumbar Image
+          </label>
+          <i class="fas fa-upload"></i>
+          <input type="file" id="image_file" name="image_file" class="form-control" accept="image/*,.dcm" required onchange="checkSubmitButton()">
+          <small class="form-text text-muted mt-2">Supported formats: JPG, PNG, DICOM (.dcm)</small>
+        </div>
+        
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Analyzing...</span>
+          </div>
+          <p class="mt-2">Analyzing lumbar image with CNN models...</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submit-button" onclick="showLoading()">
+          Analyze Image <i class="fas fa-stethoscope"></i>
+        </button>
+      </form>
+
+      <!-- Results Section -->
+      {% if detection_message %}
+      <div class="result-container">
+        <h3 class="result-text">
+          <i class="fas fa-clipboard-check"></i> Analysis Results
+        </h3>
+        
+        {% if result_image %}
+          <img src="{{ result_image }}" class="result-img img-fluid" alt="Analyzed Lumbar Image">
+        {% endif %}
+        
+        <div class="analysis-details">
+          <h5><i class="fas fa-list-alt"></i> Detected Conditions</h5>
+          <div class="condition-list">
+            {% if detected_conditions %}
+              {% for condition in detected_conditions %}
+                <div class="condition-item">
+                  <span>{{ condition }}</span>
+                  {% if 'Normal' in condition or 'normal' in condition %}
+                    <span class="severity-badge severity-normal">Normal</span>
+                  {% elif 'Moderate' in condition %}
+                    <span class="severity-badge severity-moderate">Moderate</span>
+                  {% elif 'Severe' in condition %}
+                    <span class="severity-badge severity-severe">Severe</span>
+                  {% else %}
+                    <span class="severity-badge severity-normal">Normal/Mild</span>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="text-center text-muted">No conditions detected</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="alert alert-info mt-3">
+          <i class="fas fa-info-circle"></i>
+          <strong>Analysis Complete:</strong> {{ detection_message }}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 LumbarGuard AI Detection &mdash; Detection and Classification of Lumbar Abnormalities Using CNN Models
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script>
+    function checkSubmitButton() {
+      var imageFile = document.getElementById('image_file').files.length > 0;
+      var submitButton = document.getElementById('submit-button');
+      if (imageFile) {
+        submitButton.style.display = 'block';
+      } else {
+        submitButton.style.display = 'none';
+      }
+    }
+
+    function showLoading() {
+      document.getElementById('loadingSpinner').style.display = 'block';
+      document.getElementById('submit-button').style.display = 'none';
+    }
+
+    window.onload = function() {
+      checkSubmitButton();
+      
+      // Auto-hide loading spinner if results are shown
+      {% if detection_message %}
+        document.getElementById('loadingSpinner').style.display = 'none';
+      {% endif %}
+    };
+  </script>
+</body>
+</html>

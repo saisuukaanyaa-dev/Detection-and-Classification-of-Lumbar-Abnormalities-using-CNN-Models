@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LumbarGuard AI Detection</title>
+  <link rel="shortcut icon" href="/static/images/spine_icon.png" type="image/png">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts, Font Awesome for icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); /* Light blue medical tones */
+      color: #1E3A8A;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background: rgba(30, 58, 138, 0.95); /* Deep blue for trust */
+      box-shadow: 0 4px 15px rgba(187, 222, 251, 0.1);
+      padding: 20px 0;
+    }
+    .navbar-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #10B981; /* Emerald green for health theme */
+    }
+    .navbar-nav .nav-link {
+      color: #E3F2FD;
+      font-weight: 500;
+      margin: 0 16px;
+      border-radius: 8px;
+      transition: all 0.4s ease-in-out;
+    }
+    .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+      background: #10B981;
+      color: #1E3A8A;
+      transform: rotate(5deg); /* Rotation transformation on hover */
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(130deg, #BBDEFB 0%, #E3F2FD 100%);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      background: url('/static/images/spine_xray_abstract.webp') center/cover no-repeat;
+      mix-blend-mode: overlay;
+      opacity: 0.2;
+      z-index: 1;
+      animation: pulse 10s ease-in-out infinite; /* Pulse animation for heartbeat effect */
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+      padding: 70px;
+      background: rgba(227, 242, 253, 0.9); /* Light blue with transparency */
+      border-radius: 20px;
+      box-shadow: 0 6px 25px rgba(187, 222, 251, 0.2);
+      transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy transition */
+    }
+    .hero-content:hover {
+      transform: scale(1.03); /* Slight scale on hover */
+    }
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #10B981;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+      text-shadow: 0 3px 10px rgba(30, 58, 138, 0.4);
+      display: flex;
+      align-items: center;
+      animation: fadeInUp 1.5s ease-out; /* Fade in animation */
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-title i {
+      margin-right: 25px;
+      font-size: 2.7rem;
+      color: #3B82F6; /* Blue for medical theme */
+      transition: transform 0.5s ease;
+    }
+    .hero-title:hover i {
+      transform: rotate(360deg); /* Full rotation on hover */
+    }
+    .hero-desc {
+      font-size: 1.4rem;
+      color: #1E40AF;
+      margin-bottom: 50px;
+      line-height: 1.8;
+    }
+    .hero-btn {
+      background: #10B981;
+      color: #E3F2FD;
+      font-weight: 600;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      padding: 18px 40px;
+      box-shadow: 0 8px 25px rgba(187, 222, 251, 0.15);
+      transition: background 0.4s, box-shadow 0.4s, transform 0.4s;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .hero-btn i {
+      margin-left: 15px;
+      font-size: 1.4rem;
+      transition: transform 0.4s ease;
+    }
+    .hero-btn:hover {
+      background: #059669;
+      color: #E3F2FD;
+      box-shadow: 0 10px 30px rgba(187, 222, 251, 0.2);
+      transform: translateY(-5px); /* Lift on hover */
+    }
+    .hero-btn:hover i {
+      transform: translateX(15px) rotate(90deg); /* Move and rotate arrow */
+    }
+
+    /* Footer */
+    .footer {
+      background: #BBDEFB;
+      text-align: center;
+      padding: 45px 0;
+      color: #10B981;
+    }
+
+    @media (max-width: 900px) {
+      .hero-title { font-size: 2.3rem; }
+      .hero-content { padding: 40px; }
+      .hero-desc { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="fas fa-user-md"></i> LumbarGuard AI Detection</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('home') }}">
+              <i class="fas fa-home"></i> Home <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('upload') }}">
+              <i class="fas fa-upload"></i> Upload
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="carousel slide" id="customCarousel1" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <!-- Slide 1 -->
+          <div class="carousel-item active">
+            <div class="hero-title"><i class="fas fa-brain"></i> Detection of Lumbar Abnormalities</div>
+            <p class="hero-desc">
+              Leverage advanced CNN models to detect lumbar issues in spine images, enabling precise diagnostics.
+            </p>
+            <a href="{{ url_for('upload') }}" class="hero-btn">Start Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <!-- Slide 2 -->
+          <div class="carousel-item">
+            <div class="hero-title"><i class="fas fa-chart-line"></i> Accurate Classification</div>
+            <p class="hero-desc">
+              Classify conditions like herniation and stenosis using real-time X-ray and MRI analysis.
+            </p>
+            <a href="{{ url_for('upload') }}" class="hero-btn">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <!-- Slide 3 -->
+          <div class="carousel-item">
+            <div class="hero-title"><i class="fas fa-bell"></i> Instant Insights</div>
+            <p class="hero-desc">
+              Get automated reports and predictive analytics for enhanced patient care and intervention.
+            </p>
+            <a href="{{ url_for('upload') }}" class="hero-btn">Get Started <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel1" data-bs-slide="prev">
+          <i class="fas fa-chevron-left"></i>
+          <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#customCarousel1" data-bs-slide="next">
+          <i class="fas fa-chevron-right"></i>
+          <span class="sr-only">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 LumbarGuard AI Detection &mdash; Detection and Classification of Lumbar Abnormalities Using CNN Models
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

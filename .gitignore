@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.env
+*.zip
+*.pth
+*.pt
+*.h5
+*.pkl
+*.npy
+*.nii
+*.nii.gz
+upload_models.pyupload_models.py
+node_modules/

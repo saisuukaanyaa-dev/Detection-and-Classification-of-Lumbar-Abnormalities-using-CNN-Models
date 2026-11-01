@@ -1,0 +1,10 @@
+names:
+- L1_L2
+- L2_L3
+- L3_L4
+- L4_L5
+- L5_S1
+nc: 5
+path: /kaggle/working/yolo_data
+train: images/train
+val: images/val
